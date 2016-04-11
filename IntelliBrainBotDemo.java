@@ -1,3 +1,4 @@
+// bibliotecas
 import com.ridgesoft.io.Display;
 import com.ridgesoft.io.Speaker;
 import com.ridgesoft.robotics.IrRemote;
@@ -20,7 +21,7 @@ import com.ridgesoft.robotics.ContinuousRotationServo;
 import com.ridgesoft.robotics.Navigator;
 import com.ridgesoft.robotics.DifferentialDriveNavigator;
 import com.ridgesoft.intellibrain.IntelliBrain;
-
+// class where we define the several buttons the robot uses
 public class IntelliBrainBotDemo {
     private static final int CHANNEL_UP = 144;
     private static final int CHANNEL_DOWN = 145;
@@ -76,22 +77,31 @@ public class IntelliBrainBotDemo {
             // Create a table of functions you can select from through your
             // robot's user interface.
             Runnable functions[] = new Runnable[] {
+                    //robot does nothing, usefull for making sure that sensors are ok
                     new DoNothing(),
-					new PlayTune(IntelliBrain.getBuzzer()), 
-                    new RemoteControl(irRemote, leftMotor, rightMotor, 16, 10,
-                            CHANNEL_UP, CHANNEL_DOWN, VOLUME_DOWN, VOLUME_UP,
-                            0xff),
+						new PlayTune(IntelliBrain.getBuzzer()), 
+                   //requiers a controller or an app to funcion
+                   //new RemoteControl(irRemote, leftMotor, rightMotor, 16, 10,
+                            //CHANNEL_UP, CHANNEL_DOWN, VOLUME_DOWN, VOLUME_UP,
+                            //0xff),
+                    // class for robot to move foward
                     new NavigateForward(navigator, 24),
+                    // the robor rotates 180 degreees
                     new Rotate(navigator),
+                    //robot makes a navigates making a square
                     new NavigateSquare(navigator, 16.0f),
+                    //robot makes random movements looking like he is dancing
                     new RandomDance(leftMotor, rightMotor, 
                             (leftWheelInput.sample() + 1) * 
                             (rightWheelInput.sample() + 1)),
+                    // robot uses sensors to "read" a line that it reads
                     new FollowLine(leftMotor, rightMotor, leftLineSensor,
                             rightLineSensor, 300, 10, 5),
+                    //robot avoids any object in range from its sonars
                     new AvoidObstacles(localizer, navigator, leftRangeSensor,
                             rightRangeSensor, IntelliBrain.getStatusLed(), 200,
                             0.7f, 3000, 24.0f, 500, Thread.MAX_PRIORITY - 4),
+                    // robot follows any object that is in front of the range from is sonars
                     new FollowObject(sonarSensor, leftServo, rightServo),
             };
 
@@ -149,14 +159,18 @@ public class IntelliBrainBotDemo {
 
             // Create the list of screens to display.
             Screen[] screens = new Screen[] {
+                    //simple screen that dysplays random text
                     new TwoLineScreen("Meu Robo", "versao 1"),
+                    //screen where it shows the sensor from the wheels
                     new TwoLineScreen("L Wheel: ", leftWheelInput, "R Wheel: ",
                             rightWheelInput),
                     new TwoLineScreen("L Line: ", leftLineSensor, "R Line: ",
                             rightLineSensor),
                     new TwoLineScreen("L Range: ", leftRangeSensor,
                             "R Range: ", rightRangeSensor),
+                    //screen shows data from sonar
                     new SonarSensorScreen(sonarSensor),
+                    //screen shows data from encoders
                     new TwoLineScreen("L Enc: ", leftEncoder, "R Enc: ",
                             rightEncoder),
                     new TwoLineScreen("Pose", null, null, localizer), };
