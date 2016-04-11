@@ -3,13 +3,13 @@ import com.ridgesoft.robotics.Motor;
 
 
 public class FollowLine implements Runnable {
-    // defeni�oes de estado
+    // defeniçoes de estado
     private static final byte UNK = 0; // unknown
-    private static final byte S2L = 1; // 2 sensors left of line
-    private static final byte S1L = 2; // 1 sensor left of line
+    private static final byte S2L = 1; // 2º sensors left of line
+    private static final byte S1L = 2; // 1º sensor left of line
     private static final byte CTR = 3; // centered, both sensors on line
-    private static final byte S1R = 4; // 1 sensor right of line
-    private static final byte S2R = 5; // 2 sensors right of line
+    private static final byte S1R = 4; // 1º sensor right of line
+    private static final byte S2R = 5; // 2º sensors right of line
 
     private static final byte LEFT = 0;
     private static final byte RIGHT = 1;
@@ -24,7 +24,7 @@ public class FollowLine implements Runnable {
             new byte[] { S2R, S1L, S1R, CTR }, // 1 right
             new byte[] { S2R, S1L, S1R, CTR }, // 2 right
     };
-
+    //defines class
     private Motor mLeftMotor;
     private Motor mRightMotor;
 
@@ -57,7 +57,7 @@ public class FollowLine implements Runnable {
                 new byte[] { 0,      normal }, // 2 right
         };
     }
-
+    //makes the class runnable
     public void run() {
         try {
             int state = UNK;
@@ -66,7 +66,7 @@ public class FollowLine implements Runnable {
                 int leftSample = mLeftSensor.sample();
                 int rightSample = mRightSensor.sample();
 
-                // V� a linha
+                // Vê a linha
                 int index = 0;
                 if (leftSample > mThreshold)
                     index |= 0x2;
