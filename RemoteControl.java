@@ -1,19 +1,6 @@
-/*
- * Copyright 2005 by RidgeSoft, LLC., PO Box 482, Pleasanton, CA 94566, U.S.A.
- * www.ridgesoft.com
- * 
- * RidgeSoft grants you the right to use, modify, make derivative works and
- * redistribute this source file provided you do not remove this copyright
- * notice.
- */
-
 import com.ridgesoft.robotics.IrRemote;
 import com.ridgesoft.robotics.Motor;
 
-/**
- * This class provides a means to use a Sony compatible infrared remote control
- * to remotely control movement of your robot.
- */
 public class RemoteControl implements Runnable {
     private IrRemote mIrRemote;
     private Motor mLeftMotor;
@@ -44,12 +31,17 @@ public class RemoteControl implements Runnable {
 
     public void run() {
         try {
-            while (true) {
+          
+           while (true) {
+                
                 int irData = mIrRemote.read();
+                
                 if (irData != -1) {
+                    
                     irData &= mMask;
 
                     if (irData == mForwardCommand) {
+                        
                         mLeftMotor.setPower(mDrivePower);
                         mRightMotor.setPower(mDrivePower);
                     }
